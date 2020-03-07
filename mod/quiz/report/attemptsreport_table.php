@@ -202,8 +202,10 @@ abstract class quiz_attempts_report_table extends table_sql {
      * @return string HTML content to go inside the td.
      */
     public function col_duration($attempt) {
-        if ($attempt->timefinish) {
+        if ($attempt->timefinish && $attempt->timestart != $attempt->timefinish) {
             return format_time($attempt->timefinish - $attempt->timestart);
+        } else if ($attempt->timefinish && $attempt->timestart == $attempt->timefinish) {
+            return get_string('notime', 'quiz');
         } else {
             return '-';
         }
